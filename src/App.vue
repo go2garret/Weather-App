@@ -1,21 +1,41 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { ref } from 'vue';
+
+let showSearch = ref(false);
+
+function toggleSearch() {
+  showSearch.value = !showSearch.value;
+}
 
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
     <div class="wrapper">
+      <h1>Simple Weather</h1>
 
+      <nav class="searchIcon" @click.prevent="toggleSearch">
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <svg v-if="showSearch" width="35" height="35" viewBox="0 0 24 24" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 6L18 18M18 6L6 18" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+
+        <svg v-else width="35" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z"
+            stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+
       </nav>
 
     </div>
+
+    <div v-if="showSearch" class="pb-1">
+      <input v-if="showSearch" type="text" placeholder="Search by city" />
+    </div>
+
   </header>
 
   <RouterView />
@@ -23,64 +43,58 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <style lang="scss" scoped>
 header {
+  background-color: #2960c0;
   line-height: 1.5;
   max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
+  color: #ffffff;
   width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+  h1 {
+    font-size: 1.5rem;
   }
 
-  .logo {
-    margin: 0 2rem 0 0;
+  .searchIcon {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  header .wrapper {
+  .wrapper {
+    padding: 8px 8px 0 8px;
+    width: 100%;
     display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
   }
 
   nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
+    font-size: 12px;
+    text-align: center;
+  }
 
-    padding: 1rem 0;
-    margin-top: 1rem;
+  nav a.router-link-exact-active {
+    color: var(--color-text);
+  }
+
+  nav a.router-link-exact-active:hover {
+    background-color: transparent;
+  }
+
+  nav a {
+    display: inline-block;
+    padding: 0 1rem;
+    border-left: 1px solid var(--color-border);
+  }
+
+  nav a:first-of-type {
+    border: 0;
   }
 }
+
+@media (min-width: 1024px) {}
 </style>
