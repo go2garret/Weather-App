@@ -52,10 +52,6 @@ header {
   align-items: center;
   flex-direction: column;
 
-  h1 {
-    font-size: 1.5rem;
-  }
-
   .searchIcon {
     padding: 0;
     margin: 0;
