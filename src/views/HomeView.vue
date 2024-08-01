@@ -6,22 +6,24 @@ import NextHours from '@/components/NextHours.vue';
 
 // Define the type for the city object
 type City = {
-  id: number;
-  name: string;
-  country: string;
+  city_id: number;
+  city_name: string;
+  lat: number;
+  lon: number;
 };
 
 let activeCity = ref<City>({
-  id: 3,
-  name: 'Los Angeles',
-  country: 'United States'
+  city_id: 5368361,
+  city_name: 'Los Angeles',
+  lat: 34.05223,
+  lon: -118.24368
 }
 );
 
 const cities: City[] = [
-  { id: 1, name: 'Rio de Janeiro', country: 'Brazil' },
-  { id: 2, name: 'Beijing', country: 'China' },
-  { id: 3, name: 'Los Angeles', country: 'United States' }
+  { city_id: 3451190, city_name: 'Rio de Janeiro', lat: -22.90278, lon: -43.2075 }, //3451190,Rio de Janeiro,21,BR,Brazil,-22.90278,-43.2075
+  { city_id: 1816670, city_name: 'Beijing', lat: 39.9075, lon: 116.39723 }, //1816670,Beijing,22,CN,Paracel Islands,39.9075,116.39723
+  { city_id: 5368361, city_name: 'Los Angeles', lat: 34.05223, lon: -118.24368 } //5368361,Los Angeles,CA,US,United States,34.05223,-118.24368
 ];
 
 const updateActiveCity = (newCity: City) => {

@@ -3,9 +3,8 @@ import { defineProps } from 'vue';
 
 // Define the type for the city object
 type City = {
-    id: number;
-    name: string;
-    country: string;
+    city_id: number;
+    city_name: string;
 };
 
 const props = defineProps<{
@@ -26,10 +25,11 @@ const setActive = (city: Object) => {
     <nav>
         <ul class="list-unstyled d-flex w-100 items-center m-0 px-3">
 
-            <li class="py-3 me-3 text-uppercase text-secondary" :class="{ 'active': props.activeCity.id == city.id }"
-                v-for="city in cities" :key="city.id" @click.prevent="setActive(city)">
+            <li class="py-3 me-3 text-uppercase text-secondary"
+                :class="{ 'active': props.activeCity.city_id == city.city_id }" v-for="city in cities"
+                :key="city.city_id" @click.prevent="setActive(city)">
 
-                {{ city.name }}
+                {{ city.city_name }}
 
             </li>
 
