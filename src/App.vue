@@ -33,7 +33,7 @@ function toggleSearch() {
     </div>
 
     <div v-if="showSearch" class="pb-1">
-      <input v-if="showSearch" type="text" placeholder="Search by city" />
+      <input v-if="showSearch" class="form-control mb-2" type="text" placeholder="Search by city" />
     </div>
 
   </header>

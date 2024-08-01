@@ -7,12 +7,12 @@ import { ref } from 'vue';
 <template>
     <section class="py-2 bg-white mb-4 rounded-1">
 
-        <h1 class="border-bottom p-2 w-100">
+        <h1 class="p-2 w-100">
             <slot tag="div" name="title"></slot>
         </h1>
 
 
-        <div class="px-2">
+        <div class="border-top px-2">
             <slot tag="div" name="body"></slot>
         </div>
 
