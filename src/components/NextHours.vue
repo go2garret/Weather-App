@@ -13,19 +13,28 @@ const forecast = ref<Object | null>(null);
 
 let loading = ref(false);
 
+const loadCity = async (city = props.activeCity) => {
+    loading.value = true;
+    const { city_name } = city;
+    try {
+        const response = await _Cities.getHourlyForecast(city_name);
+        forecast.value = response;
+    } catch (error) {
+        console.error('Error fetching forecast:', error);
+    } finally {
+        loading.value = false;
+    }
+}
+
+// Expose the method to the parent via `expose`
+defineExpose({
+    loadCity
+});
+
 watch(
     () => props.activeCity,
     async (newCity) => {
-        loading.value = true;
-        const { city_name } = newCity;
-        try {
-            const response = await _Cities.getHourlyForecast(city_name);
-            forecast.value = response; // Assign the data directly
-        } catch (error) {
-            console.error('Error fetching forecast:', error);
-        } finally {
-            loading.value = false;
-        }
+        loadCity()
     },
     { immediate: true }
 );

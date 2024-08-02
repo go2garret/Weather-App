@@ -3,16 +3,8 @@ import { ref, defineProps, watch } from 'vue';
 import WeatherSection from './WeatherSection.vue';
 import { Cities } from '@/classes/Cities'
 
-// Define the type for the city object
-type City = {
-    city_id: number;
-    city_name: string;
-    lat: number;
-    lon: number;
-};
-
 const props = defineProps<{
-    activeCity: City;
+    activeCity: Object;
 }>();
 
 const _Cities = new Cities();
@@ -31,20 +23,29 @@ const dateFormat = ref({
 // This is a hack because the daily results require additional authorization.
 let forecastList = ref(null);
 
+const loadCity = async (city = props.activeCity) => {
+    loading.value = true;
+    const { city_name } = city;
+    try {
+        const response = await _Cities.getDailyForecast(city_name);
+        forecast.value = response;
+        forecastList.value = forecast.value.list.filter((row) => row.dt_txt.endsWith('21:00:00'));
+    } catch (error) {
+        console.error('Error fetching forecast:', error);
+    } finally {
+        loading.value = false;
+    }
+}
+
+// Expose the method to the parent via `expose`
+defineExpose({
+    loadCity
+});
+
 watch(
     () => props.activeCity,
     async (newCity) => {
-        loading.value = true;
-        const { city_name } = newCity;
-        try {
-            const response = await _Cities.getDailyForecast(city_name);
-            forecast.value = response; // Assign the data directly
-            forecastList.value = forecast.value.list.filter((row) => row.dt_txt.endsWith('21:00:00'));
-        } catch (error) {
-            console.error('Error fetching forecast:', error);
-        } finally {
-            loading.value = false;
-        }
+        loadCity(newCity)
     },
     { immediate: true }
 );
