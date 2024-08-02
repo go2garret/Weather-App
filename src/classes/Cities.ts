@@ -1,5 +1,3 @@
-import Papa from 'papaparse'
-
 export class Cities {
   private API_KEY: string
   private BASE_URL: string
