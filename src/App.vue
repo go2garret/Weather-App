@@ -1,10 +1,23 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import SearchCities from '@/components/SearchCities.vue';
+
+// Set default selected city
+let activeCity = ref<Object>({
+  city_id: 5368361,
+  city_name: 'Los Angeles',
+}
+);
 
 let showSearch = ref(false);
 
 function toggleSearch() {
   showSearch.value = !showSearch.value;
+}
+
+// Select city at app level, and pass to child components
+function selectCity(city: Object) {
+  activeCity.value = city;
 }
 
 </script>
@@ -14,7 +27,7 @@ function toggleSearch() {
     <div class="wrapper">
       <h1>Simple Weather</h1>
 
-      <nav class="searchIcon" @click.prevent="toggleSearch">
+      <nav class="searchIcon cursor-pointer" @click.prevent="toggleSearch">
 
         <svg v-if="showSearch" width="35" height="35" viewBox="0 0 24 24" fill="none"
           xmlns="http://www.w3.org/2000/svg">
@@ -33,13 +46,13 @@ function toggleSearch() {
 
     </div>
 
-    <div v-if="showSearch" class="pb-1">
-      <input v-if="showSearch" class="form-control mb-2" type="text" placeholder="Search by city" />
+    <div v-if="showSearch" class="w-100">
+      <SearchCities v-on:selectCity="selectCity"></SearchCities>
     </div>
 
   </header>
 
-  <RouterView />
+  <RouterView :activeCity="activeCity" v-on:selectCity="selectCity" />
 </template>
 
 <style lang="scss" scoped>
