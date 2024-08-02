@@ -19,20 +19,31 @@ const _Cities = new Cities();
 
 const forecast = ref<Object | null>(null);
 
-let loading = false;
+var loading = ref(false);
+
+const dateFormat = ref({
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric'
+});
+
+// Get Daily Forecast using only the 12pm results. 
+// This is a hack because the daily results require additional authorization.
+let forecastList = ref(null);
 
 watch(
     () => props.activeCity,
     async (newCity) => {
-        loading = true;
-        const { lat, lon } = newCity;
+        loading.value = true;
+        const { city_name } = newCity;
         try {
-            const response = await _Cities.getDailyForecast(lat, lon);
+            const response = await _Cities.getDailyForecast(city_name);
             forecast.value = response; // Assign the data directly
+            forecastList.value = forecast.value.list.filter((row) => row.dt_txt.endsWith('21:00:00'));
         } catch (error) {
             console.error('Error fetching forecast:', error);
         } finally {
-            loading = false;
+            loading.value = false;
         }
     },
     { immediate: true }
@@ -51,32 +62,36 @@ watch(
             <div v-if="loading" class="text-secondary px-3">
                 Loading...
             </div>
-            <div class="d-flex p-3" v-if="forecast && !loading">
-                <div v-for="row in forecast.list.filter((row) => row.dt_txt.endsWith('12:00:00'))" :key="row.dt"
-                    class="d-inline-flex flex-column align-items-center justify-content-center">
+            <div class="p-3" v-if="forecast && !loading">
+                <div v-for="row in forecastList" :key="row.dt" class="w-full d-flex align-items-center border-bottom">
 
-                    <div>
-                        <b>{{ Math.round(row.main.temp) }}°</b>
-                    </div>
-
-                    <div class="text-info">
-                        {{ row.main.humidity }}%
-                    </div>
-
-                    <div>
+                    <div class="col-3">
                         <img :src="`https://openweathermap.org/img/wn/${row.weather[0]?.icon}@2x.png`">
                     </div>
 
-                    <div class="text-secondary" :title="row.dt_txt">
-                        {{ new Date(row.dt_txt).toLocaleTimeString('en-US', {
-                            hour: 'numeric', minute: 'numeric',
-                            hour12: true
-                        }) }}
+                    <div class="col-6 text-center">
+                        <div class="fs-4 fw-medium" :title="row.dt_txt">
+                            {{ new Date(row.dt_txt).toLocaleDateString('en-US', dateFormat) }}
+                        </div>
+                        <div class="text-secondary fw-medium">
+                            {{ row.weather[0].description.slice(0, 1).toUpperCase() +
+                                row.weather[0].description.slice(1) }}.
+                        </div>
                     </div>
 
+                    <ul class="col-3 m-0 fs-5 list-unstyled d-flex">
+                        <li class="me-2 fw-medium">{{ Math.round(row.main.temp_max) }}°</li>
+                        <li class="fw-medium">{{ Math.round(row.main.temp_min) }}°</li>
+                    </ul>
                 </div>
             </div>
         </template>
 
     </WeatherSection>
 </template>
+
+<style lang="scss" scoped>
+img {
+    width: 68px;
+}
+</style>

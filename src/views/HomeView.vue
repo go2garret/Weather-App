@@ -40,14 +40,27 @@ const updateActiveCity = (newCity: City) => {
     <NextHours :activeCity="activeCity"></NextHours>
     <NextDays :activeCity="activeCity"></NextDays>
 
+
+    <div class="background-container">
+
+    </div>
   </main>
 </template>
 
 <style lang="scss" scoped>
 main {
   padding: 1.2rem;
-  background-color: blue;
-  background-image: linear-gradient(to bottom, #10588a 30%, #0ca7c6 60%, #e4ecf1 60%, #e4ecf1 100%);
   flex-grow: 1;
+}
+
+.background-container {
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 100px;
+  left: 0;
+  background-color: #3f5fba;
+  background-image: linear-gradient(to bottom, #3f5fba 30%, #3788c0 60%, #e4ecf1 60%, #e4ecf1 100%);
 }
 </style>

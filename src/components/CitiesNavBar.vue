@@ -23,7 +23,7 @@ const setActive = (city: Object) => {
 <template>
 
     <nav>
-        <ul class="list-unstyled d-flex w-100 items-center m-0 px-3">
+        <ul class="list-unstyled d-flex w-100 items-center m-0 px-3 bg-white">
 
             <li class="py-3 me-3 text-uppercase text-secondary"
                 :class="{ 'active': props.activeCity.city_id == city.city_id }" v-for="city in cities"
