@@ -1,18 +1,10 @@
 <script setup lang="ts">
-import { ref, defineProps, onMounted, watch } from 'vue';
+import { ref, defineProps, watch } from 'vue';
 import WeatherSection from './WeatherSection.vue';
 import { Cities } from '@/classes/Cities'
 
-// Define the type for the city object
-type City = {
-    city_id: number;
-    city_name: string;
-    lat: number;
-    lon: number;
-};
-
 const props = defineProps<{
-    activeCity: City;
+    activeCity: Object;
 }>();
 
 const _Cities = new Cities();
@@ -52,29 +44,34 @@ watch(
                 Loading...
             </div>
             <div class="d-flex p-3" v-if="forecast && !loading">
-                <div v-for="row in forecast.list.splice(0, 12)" :key="row.dt"
-                    class="d-inline-flex flex-column align-items-center justify-content-center px-1">
+                <div v-for="row in forecast.list.splice(0, 12)" :key="row.dt" class="d-flex align-items-center">
 
-                    <div>
-                        <b>{{ Math.round(row.main.temp) }}°</b>
+                    <div class="d-inline-flex flex-column align-items-center justify-content-center px-2">
+
+                        <div>
+                            <b>{{ Math.round(row.main.temp) }}°</b>
+                        </div>
+
+                        <div class="text-info">
+                            {{ row.main.humidity }}%
+                        </div>
+
+                        <div>
+                            <img :src="`https://openweathermap.org/img/wn/${row.weather[0]?.icon}@2x.png`">
+                        </div>
+
+                        <div class="text-secondary" :title="row.dt_txt">
+                            {{ new Date(row.dt_txt).toLocaleTimeString('en-US', {
+                                timeZone: 'America/Los_Angeles',
+                                hour: 'numeric', minute: 'numeric',
+                                hour12: true
+                            }) }}
+                        </div>
                     </div>
 
-                    <div class="text-info">
-                        {{ row.main.humidity }}%
-                    </div>
+                    <div class="border-right border-muted" style="height: 75%">
 
-                    <div>
-                        <img :src="`https://openweathermap.org/img/wn/${row.weather[0]?.icon}@2x.png`">
                     </div>
-
-                    <div class="text-secondary" :title="row.dt_txt">
-                        {{ new Date(row.dt_txt).toLocaleTimeString('en-US', {
-                            timeZone: 'America/Los_Angeles',
-                            hour: 'numeric', minute: 'numeric',
-                            hour12: true
-                        }) }}
-                    </div>
-
                 </div>
             </div>
         </template>
@@ -85,5 +82,10 @@ watch(
 <style lang="scss" scoped>
 img {
     width: 68px;
+}
+
+.text-info {
+    font-weight: 500;
+    color: #00b3da !important;
 }
 </style>

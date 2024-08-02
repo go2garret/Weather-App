@@ -55,7 +55,7 @@ onMounted(() => {
     </div>
   </main>
 
-  <footer class="bg-primary p-2 d-flex align-items-center justify-content-center">
+  <footer class="bg-primary p-2 pb-3 d-flex align-items-center justify-content-center">
     <div class="text-white">
       Last updated {{ lastUpdated }}
     </div>

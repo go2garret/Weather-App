@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineProps, onMounted, watch } from 'vue';
+import { ref, defineProps, watch } from 'vue';
 import WeatherSection from './WeatherSection.vue';
 import { Cities } from '@/classes/Cities'
 
@@ -55,7 +55,7 @@ watch(
     <WeatherSection style="overflow-x: auto">
 
         <template #title>
-            Next days
+            Next {{ forecastList?.length }} days
         </template>
 
         <template #body>
@@ -63,7 +63,8 @@ watch(
                 Loading...
             </div>
             <div class="p-3" v-if="forecast && !loading">
-                <div v-for="row in forecastList" :key="row.dt" class="w-full d-flex align-items-center border-bottom">
+                <div v-for="row in forecastList" :key="row.dt"
+                    class="w-full d-flex align-items-center border-bottom mx-auto" style="max-width:680px">
 
                     <div class="col-3">
                         <img :src="`https://openweathermap.org/img/wn/${row.weather[0]?.icon}@2x.png`">
@@ -79,7 +80,7 @@ watch(
                         </div>
                     </div>
 
-                    <ul class="col-3 m-0 fs-5 list-unstyled d-flex">
+                    <ul class="col-3 m-0 fs-5 list-unstyled d-flex justify-content-end">
                         <li class="me-2 fw-medium">{{ Math.round(row.main.temp_max) }}°</li>
                         <li class="fw-medium">{{ Math.round(row.main.temp_min) }}°</li>
                     </ul>

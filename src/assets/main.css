@@ -5,6 +5,26 @@ body {
   padding: 0;
 }
 
+.fw-medium {
+  font-weight: 600;
+}
+
+.border-right {
+  border-right: 1px solid #cecece;
+}
+
+.left-0 {
+  left: 0;
+}
+
+.sticky {
+  position: sticky;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
 #app {
   margin: 0 auto;
   font-weight: normal;
