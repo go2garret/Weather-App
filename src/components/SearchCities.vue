@@ -37,7 +37,7 @@ export default {
             }
             this.showResults = true;
             this.cities.search(this.searchTerm).then(response => {
-                this.searchResults = response.splice(0, 12);
+                this.searchResults = response?.splice(0, 12);
             });
         },
 
@@ -47,7 +47,6 @@ export default {
                 city_name: city[1]
             }
             this.$emit('selectCity', cityObject);
-            console.log("SELECT CITY RESULT", city);
             this.searchTerm = city[1] + ", " + city[2] + ", " + city[4];
             this.showResults = false;
         }

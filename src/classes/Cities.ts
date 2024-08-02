@@ -5,12 +5,16 @@ export class Cities {
   private BASE_URL: string
 
   constructor() {
-    this.API_KEY = '482944e26d320a80bd5e4f23b3de7d1f' // Replace with your actual API key
+    this.API_KEY = '482944e26d320a80bd5e4f23b3de7d1f'
     this.BASE_URL = 'https://api.openweathermap.org/data/2.5/forecast'
     this.cities = null
   }
 
-  // Search the text file contents for matching string
+  /**
+   * Search the text file contents for matching string
+   * @param term
+   * @returns
+   */
   async search(term: string): Promise<string[][]> {
     if (!term || term.length == 0) {
       return null
@@ -43,7 +47,11 @@ export class Cities {
     return results
   }
 
-  // Load text file into array
+  /**
+   * Load text file into array
+   * @param url
+   * @returns
+   */
   private async loadCSV(url: string): Promise<string[][]> {
     const response = await fetch(url)
     const csvText = await response.text()
@@ -51,6 +59,11 @@ export class Cities {
     return lines.map((line) => line.split(','))
   }
 
+  /**
+   *
+   * @param city_name
+   * @returns
+   */
   async getHourlyForecast(city_name: string): Promise<void> {
     try {
       const response = await fetch(
@@ -69,6 +82,11 @@ export class Cities {
     }
   }
 
+  /**
+   *
+   * @param city_name
+   * @returns
+   */
   async getDailyForecast(city_name: string): Promise<void> {
     try {
       const response = await fetch(

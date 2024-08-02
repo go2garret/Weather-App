@@ -19,7 +19,7 @@ const dateFormat = ref({
     day: 'numeric'
 });
 
-// Get Daily Forecast using only the 12pm results. 
+// Get Daily Forecast using one of the daytime results. 
 // This is a hack because the daily results require additional authorization.
 let forecastList = ref(null);
 
