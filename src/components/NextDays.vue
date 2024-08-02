@@ -3,8 +3,13 @@ import { ref, defineProps, watch } from 'vue';
 import WeatherSection from './WeatherSection.vue';
 import { Cities } from '@/classes/Cities'
 
+type City = {
+    city_name: string;
+    city_id: number;
+};
+
 const props = defineProps<{
-    activeCity: Object;
+    activeCity: City;
 }>();
 
 const _Cities = new Cities();
@@ -23,13 +28,13 @@ const dateFormat = ref({
 // This is a hack because the daily results require additional authorization.
 let forecastList = ref(null);
 
-const loadCity = async (city = props.activeCity as { city_name: string }) => {
+const loadCity = async (city = props.activeCity) => {
     loading.value = true;
     const { city_name } = city;
     try {
         const response = await _Cities.getDailyForecast(city_name);
         forecast.value = response;
-        forecastList.value = forecast.value.list.filter((row: any) => row.dt_txt.endsWith('21:00:00'));
+        forecastList.value = forecast.value.list.filter((row: { dt_txt: string }) => row.dt_txt.endsWith('21:00:00'));
     } catch (error) {
         console.error('Error fetching forecast:', error);
     } finally {
