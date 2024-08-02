@@ -1,6 +1,7 @@
 export class Cities {
   private API_KEY: string
   private BASE_URL: string
+  private cities: string[][] | null = null
 
   constructor() {
     this.API_KEY = '482944e26d320a80bd5e4f23b3de7d1f'
@@ -13,7 +14,7 @@ export class Cities {
    * @param term
    * @returns
    */
-  async search(term: string): Promise<string[][]> {
+  async search(term: string): Promise<string[][] | null> {
     if (!term || term.length == 0) {
       return null
     }
@@ -26,7 +27,7 @@ export class Cities {
     // Filter the cities based on the search term
     const searchTerm = term.toLowerCase()
 
-    const results = []
+    const results: string[][] = []
 
     this.cities.forEach((city) => {
       if (city[1]?.toLowerCase().startsWith(searchTerm)) {

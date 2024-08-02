@@ -9,7 +9,7 @@ const props = defineProps<{
 
 const _Cities = new Cities();
 
-const forecast = ref<Object | null>(null);
+const forecast = ref<any>(null);
 
 var loading = ref(false);
 
@@ -23,13 +23,13 @@ const dateFormat = ref({
 // This is a hack because the daily results require additional authorization.
 let forecastList = ref(null);
 
-const loadCity = async (city = props.activeCity) => {
+const loadCity = async (city = props.activeCity as { city_name: string }) => {
     loading.value = true;
     const { city_name } = city;
     try {
         const response = await _Cities.getDailyForecast(city_name);
         forecast.value = response;
-        forecastList.value = forecast.value.list.filter((row) => row.dt_txt.endsWith('21:00:00'));
+        forecastList.value = forecast.value.list.filter((row: any) => row.dt_txt.endsWith('21:00:00'));
     } catch (error) {
         console.error('Error fetching forecast:', error);
     } finally {

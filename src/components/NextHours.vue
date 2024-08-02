@@ -9,11 +9,11 @@ const props = defineProps<{
 
 const _Cities = new Cities();
 
-const forecast = ref<Object | null>(null);
+const forecast = ref<any>(null);
 
 let loading = ref(false);
 
-const loadCity = async (city = props.activeCity) => {
+const loadCity = async (city = props.activeCity as { city_name: string }) => {
     loading.value = true;
     const { city_name } = city;
     try {

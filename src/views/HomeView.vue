@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, defineProps, defineEmits, onMounted } from 'vue';
+import type { Ref } from 'vue';
 import CitiesNavBar from '@/components/CitiesNavBar.vue';
 import NextDays from '@/components/NextDays.vue';
 import NextHours from '@/components/NextHours.vue';
@@ -14,7 +15,7 @@ const cities: Object[] = [
   { city_id: 5368361, city_name: 'Los Angeles', lat: 34.05223, lon: -118.24368 } //5368361,Los Angeles,CA,US,United States,34.05223,-118.24368
 ];
 
-let lastUpdated = ref(null);
+let lastUpdated: Ref<string | null> = ref(null);
 
 const emit = defineEmits(['selectCity', 'refresh']);
 
@@ -31,12 +32,12 @@ const setUpdatedTime = () => {
     hour: 'numeric',
     minute: 'numeric',
     second: 'numeric',
-    hour12: true // Use this for AM/PM format. Set to false for 24-hour format
+    hour12: true
   });
 }
 
-const nextHoursRef = ref(null);
-const nextDaysRef = ref(null);
+const nextHoursRef = ref<InstanceType<typeof NextHours> | null>(null);
+const nextDaysRef = ref<InstanceType<typeof NextDays> | null>(null);
 
 const refresh = () => {
   emit('refresh', props.activeCity);

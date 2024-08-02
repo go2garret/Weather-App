@@ -4,7 +4,8 @@
             @click.prevent="showResults = true" />
 
         <ul v-if="searchResults && showResults" class="list-unstyled position-fixed bg-white w-100 text-dark shadow">
-            <li v-for="row in searchResults" class="px-3 py-2 cursor-pointer" @click.prevent="selectCity(row)">
+            <li v-for="row in searchResults" class="px-3 py-2 cursor-pointer" @click.prevent="selectCity(row)"
+                :key="row">
                 {{ row[1] }}, {{ row[2] }}, {{ row[4] }}
             </li>
         </ul>
