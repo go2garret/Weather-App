@@ -21,7 +21,7 @@ export class Cities {
 
     // Load cities CSV on the first try
     if (!this.cities) {
-      this.cities = await this.loadCSV('/src/assets/cities_20000.csv')
+      this.cities = await this.loadCSV('/cities_20000.csv')
     }
 
     // Filter the cities based on the search term
