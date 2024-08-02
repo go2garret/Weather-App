@@ -26,7 +26,7 @@ const dateFormat = ref({
 
 // Get Daily Forecast using one of the daytime results. 
 // This is a hack because the daily results require additional authorization.
-let forecastList = ref(null);
+let forecastList = ref<any>(null);
 
 const loadCity = async (city = props.activeCity) => {
     loading.value = true;
@@ -78,7 +78,7 @@ watch(
 
                     <div class="col-6 text-center">
                         <div class="fs-4 fw-medium" :title="row.dt_txt">
-                            {{ new Date(row.dt_txt).toLocaleDateString('en-US', dateFormat) }}
+                            {{ new Date(row.dt_txt).toLocaleDateString('en-US', (dateFormat as Object)) }}
                         </div>
                         <div class="text-secondary fw-medium">
                             {{ row.weather[0].description.slice(0, 1).toUpperCase() +
