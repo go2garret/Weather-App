@@ -7,10 +7,10 @@ export class Cities {
     this.BASE_URL = 'https://api.openweathermap.org/data/2.5/forecast'
   }
 
-  async getHourlyForecast(lat: number, lon: number): Promise<void> {
+  async getHourlyForecast(city_name: string): Promise<void> {
     try {
       const response = await fetch(
-        `${this.BASE_URL}?lat=${lat}&lon=${lon}&units=imperial&appid=${this.API_KEY}`
+        `${this.BASE_URL}?q=${city_name}&units=imperial&appid=${this.API_KEY}`
       )
 
       if (!response.ok) {
@@ -25,10 +25,10 @@ export class Cities {
     }
   }
 
-  async getDailyForecast(lat: number, lon: number): Promise<void> {
+  async getDailyForecast(city_name: string): Promise<void> {
     try {
       const response = await fetch(
-        `${this.BASE_URL}?lat=${lat}&lon=${lon}&units=imperial&appid=${this.API_KEY}`
+        `${this.BASE_URL}?q=${city_name}&units=imperial&appid=${this.API_KEY}`
       )
 
       if (!response.ok) {
